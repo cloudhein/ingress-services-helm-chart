@@ -1,0 +1,62 @@
+# ── ALB Ingress ───────────────────────────────────────────────────────────────
+alb:
+  enabled: true
+  ingressClassName: alb
+  namespace: traefik
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /ping
+    alb.ingress.kubernetes.io/healthcheck-port: "8000"
+    alb.ingress.kubernetes.io/success-codes: "200,404"
+  service:
+    name: traefik
+    port: 80
+
+# ── Traefik Configuration ─────────────────────────────────────────────────────
+traefik:
+  namespace: default
+  entryPoint: web
+  cors:
+    enabled: true
+    accessControlAllowMethods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "OPTIONS"
+    accessControlAllowHeaders:
+      - "*"
+    accessControlAllowOriginListRegex:
+      - ".*"
+    accessControlMaxAge: 100
+    addVaryHeader: true
+
+# ── Rate Limiting Middleware ───────────────────────────────────────────────────
+throttler:
+  enabled: true
+  serviceName: throttler-app
+  namespace: default
+  port: 8080
+  path: /v1/ratelimit
+  trustForwardHeader: true
+
+# ── Application Routes ────────────────────────────────────────────────────────
+routes:
+  expenses:
+    enabled: true
+    serviceName: expenses-app
+    servicePort: 8080
+    prefix: /expenses
+    stripPrefix: true
+    useThrottler: true
+    useCors: true
+
+  notifier:
+    enabled: true
+    serviceName: notifier-app
+    servicePort: 8080
+    prefix: /notifier
+    stripPrefix: true
+    useThrottler: true
+    useCors: true

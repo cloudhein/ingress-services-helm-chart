@@ -1,0 +1,23 @@
+{{- if .Values.alb.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "ingress-services.name" . }}-alb
+  namespace: {{ .Values.alb.namespace }}
+  annotations:
+    {{- range $key, $value := .Values.alb.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.alb.ingressClassName }}
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.alb.service.name }}
+                port:
+                  number: {{ .Values.alb.service.port }}
+{{- end }}

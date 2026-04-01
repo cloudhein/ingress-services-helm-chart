@@ -1,0 +1,29 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "ingress-services.name" . }}-routes
+  namespace: {{ .Values.traefik.namespace }}
+spec:
+  entryPoints:
+    - {{ .Values.traefik.entryPoint }}
+  routes:
+    {{- range $routeName, $route := .Values.routes }}
+    {{- if $route.enabled }}
+    - match: PathPrefix(`{{ $route.prefix }}`)
+      kind: Rule
+      services:
+        - name: {{ $route.serviceName }}
+          port: {{ $route.servicePort }}
+      middlewares:
+        {{- if $route.useCors }}
+        - name: cors-headers
+        {{- end }}
+        {{- if $route.useThrottler }}
+        - name: throttler-check
+        {{- end }}
+        {{- if $route.stripPrefix }}
+        - name: strip-{{ $routeName }}
+        {{- end }}
+    {{- end }}
+    {{- end }}

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ingress-services
+description: Ingress configuration for Traefik with AWS ALB and application routes
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
