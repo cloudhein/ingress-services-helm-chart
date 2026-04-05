@@ -18,8 +18,9 @@ alb:
     port: 80
 
   # ── ADD: optional host for domain routing ────────────
-  host: ""   # e.g. api.nandaxsr.xyz — leave empty to match all hosts
-  #host: "api.nandaxsr.xyz"
+  #host: ""   # e.g. api.nandaxsr.xyz — leave empty to match all hosts
+  # For production, set the host to your domain (e.g. api.nandaxsr.xyz) to enable domain-based routing and proper CORS handling
+  host: "api.nandaxsr.xyz"
 
 # ── Traefik Configuration ─────────────────────────────────────────────────────
 traefik:
