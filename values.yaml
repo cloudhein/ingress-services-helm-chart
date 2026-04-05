@@ -9,10 +9,11 @@ alb:
     alb.ingress.kubernetes.io/healthcheck-path: /ping
     alb.ingress.kubernetes.io/healthcheck-port: "8000"
     alb.ingress.kubernetes.io/success-codes: "200,404"
-    # ── ALB SSL Integration────────────────────────────────────────
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/certificate-arn: ""  # ← fill after ACM issues cert
+    ## ── ALB SSL Integration────────────────────────────────────────
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    # alb.ingress.kubernetes.io/ssl-redirect: '443'
+    # alb.ingress.kubernetes.io/certificate-arn: ""  # ← fill after ACM issues cert
+    #######################################################################
   service:
     name: traefik
     port: 80
@@ -35,13 +36,13 @@ traefik:
       - "OPTIONS"
     accessControlAllowHeaders:
       - "*"
-     ## ── STAGING (current) ──────────────────────────────
-    ## Allows all origins, no credentials
-    ## Use when: testing, no custom domain yet
+    # ── STAGING (current) ──────────────────────────────
+    # Allows all origins, no credentials
+    # Use when: testing, no custom domain yet
     accessControlAllowOriginListRegex:
       - ".*"
     accessControlAllowCredentials: false
-    ## ───────────────────────────────────────────────────
+    # ───────────────────────────────────────────────────
 
     ## ── PRODUCTION ─────────────────────────────────────
     ## Specific origin + credentials enabled

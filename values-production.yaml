@@ -9,7 +9,7 @@ alb:
     alb.ingress.kubernetes.io/healthcheck-path: /ping
     alb.ingress.kubernetes.io/healthcheck-port: "8000"
     alb.ingress.kubernetes.io/success-codes: "200,404"
-    # ── ALB SSL Integration────────────────────────────────────────
+    # ── ALB SSL Integration for production  usecases──────────────────────────────────────
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/certificate-arn: ""  # ← fill after ACM issues cert
