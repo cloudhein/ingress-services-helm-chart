@@ -16,10 +16,20 @@ spec:
       {{- range .Values.traefik.cors.accessControlAllowHeaders }}
       - {{ . | quote }}
       {{- end }}
+    {{- if .Values.traefik.cors.accessControlAllowOriginList }}
+    accessControlAllowOriginList:
+      {{- range .Values.traefik.cors.accessControlAllowOriginList }}
+      - {{ . | quote }}
+      {{- end }}
+    {{- else if .Values.traefik.cors.accessControlAllowOriginListRegex }}
     accessControlAllowOriginListRegex:
       {{- range .Values.traefik.cors.accessControlAllowOriginListRegex }}
       - {{ . | quote }}
       {{- end }}
+    {{- end }}
+    {{- if .Values.traefik.cors.accessControlAllowCredentials }}
+    accessControlAllowCredentials: {{ .Values.traefik.cors.accessControlAllowCredentials }}
+    {{- end }}
     accessControlMaxAge: {{ .Values.traefik.cors.accessControlMaxAge }}
     addVaryHeader: {{ .Values.traefik.cors.addVaryHeader }}
 ---

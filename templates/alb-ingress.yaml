@@ -11,6 +11,20 @@ metadata:
 spec:
   ingressClassName: {{ .Values.alb.ingressClassName }}
   rules:
+    {{- if .Values.alb.host }}
+    # ── with domain (production) ──────────────────────────
+    - host: {{ .Values.alb.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.alb.service.name }}
+                port:
+                  number: {{ .Values.alb.service.port }}
+    {{- else }}
+    # ── without domain (matches all hosts) ───────────────
     - http:
         paths:
           - path: /
@@ -20,4 +34,5 @@ spec:
                 name: {{ .Values.alb.service.name }}
                 port:
                   number: {{ .Values.alb.service.port }}
+    {{- end }}
 {{- end }}

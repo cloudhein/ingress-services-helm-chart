@@ -35,22 +35,15 @@ traefik:
       - "OPTIONS"
     accessControlAllowHeaders:
       - "*"
-     ## ── STAGING (current) ──────────────────────────────
-    ## Allows all origins, no credentials
-    ## Use when: testing, no custom domain yet
-    accessControlAllowOriginListRegex:
-      - ".*"
-    accessControlAllowCredentials: false
-    ## ───────────────────────────────────────────────────
 
-    ## ── PRODUCTION ─────────────────────────────────────
-    ## Specific origin + credentials enabled
-    ## Use when: api.nandaxsr.xyz + ACM cert ready
-    ## Switch BOTH together — they are linked!
-    # accessControlAllowOriginList:
-    #   - "https://flextrack.nandaxsr.xyz"
-    # accessControlAllowCredentials: true
-    ## ───────────────────────────────────────────────────
+    # ── PRODUCTION ─────────────────────────────────────
+    # Specific origin + credentials enabled
+    # Use when: api.nandaxsr.xyz + ACM cert ready
+    # Switch BOTH together — they are linked!
+    accessControlAllowOriginList:
+    - "https://flextrack.nandaxsr.xyz"
+    accessControlAllowCredentials: true
+    # ───────────────────────────────────────────────────
 
     accessControlMaxAge: 100
     addVaryHeader: true
