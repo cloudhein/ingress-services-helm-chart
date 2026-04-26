@@ -12,7 +12,7 @@ alb:
     # ── ALB SSL Integration for production  usecases──────────────────────────────────────
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-southeast-1:997184852039:certificate/8aad743a-d9e0-4c1c-a48a-25fda758ef76"  # ← fill after ACM issues cert
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-southeast-1:997184852039:certificate/1d618570-8f36-45ff-bd1f-89d5832d754b"  # ← fill after ACM issues cert
   service:
     name: traefik
     port: 80
@@ -20,7 +20,8 @@ alb:
   # ── ADD: optional host for domain routing ────────────
   #host: ""   # e.g. api.nandaxsr.xyz — leave empty to match all hosts
   # For production, set the host to your domain (e.g. api.nandaxsr.xyz) to enable domain-based routing and proper CORS handling
-  host: "api.nandaxsr.xyz"
+  # Change this host value according to your config
+  host: "backend.nandaxsr.xyz"  
 
 # ── Traefik Configuration ─────────────────────────────────────────────────────
 traefik:
